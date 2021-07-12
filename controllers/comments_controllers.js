@@ -1,5 +1,7 @@
 const db = require("../module/models");
 const Comments = db.comments;
+const Post = db.post;
+const Validator = require("fastest-validator")
 
 //!----------new commment-----------------------------//
 
@@ -8,9 +10,25 @@ exports.create_New_Comments = (req, res, next) => {
   const comment = {
     content: req.body.content,
      userId: req.userdata.userId,
-     PostId: req.body.postId,
+     postId: req.body.postId,
   };
- 
+ console.log("req body",req.body);
+ ///-----------------------------//
+ //* Validation //
+const schema = {
+  
+    content:{type:"string", optional: false, max: "500"}
+}
+
+const v = new Validator();
+const validationResponce = v.validate(comment,schema);
+
+if(validationResponce !==true){
+  return res.status(400).json({
+    message:"Validation Failed",
+    error: validationResponce
+  });
+}
 
   Comments.create(comment)
     .then((result) => {
@@ -36,48 +54,22 @@ exports.get_All_Comments = (req, res, next) => {
 
 //!----------------GET SIngle comment-----------------------------//
 
-// exports.get_single_comment = (req, res, next) => {
-//   const id = req.params.id;
-//   Comments.findByPk(id)
-//     .then((result) => {
-//       if (result) {
-//         res.status(200).json({ result: result });
-//       } else {
-//         res.status(401).json({ message: "No Post" });
-//       }
-//     })
-//     .catch((err) => {
-//       res.status(500).json({ message: "something went wrong", error: err });
-//     });
-// };
+exports.get_single_comment = (req, res, next) => {
+  const id = req.params.id;
+  Comments.findByPk(id)
+    .then((result) => {
+      if (result) {
+        res.status(200).json({ result: result });
+      } else {
+        res.status(401).json({ message: "No Post" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "something went wrong", error: err });
+    });
+};
 
 //!------------------------------------------------------//
-
-//!----------------Update SIngle comment-----------------------------//
-// exports.update_comment = (req, res, next) => {
-//   const id = req.params.id;
-//   const updated_comment = {
-//     content: req.body.content,
-//   };
-//   const userId = req.userdata.userId;
-//   Comments.update(updated_comment, {
-//     where: { id: id, userId: userId },
-//   })
-//     .then((result) => {
-//       res.status(200).json({
-//         message: "comment updated",
-//         comment: updated_comment,
-//       });
-//     })
-//     .catch((error) => {
-//       res.status(501).json({
-//         message: "something went wrong",
-//         error: error,
-//       });
-//     });
-// };
-
-//!--------------------------------------------------//
 
 //!----------------Destroy SIngle comment-----------------------------//
 

@@ -3,13 +3,15 @@ const fs = require("fs");
 const Post = db.post;
 const User = db.user;
 const Comment = db.comments;
+const Validator = require ("fastest-validator");
 //const User = db.user;
 
 //!----------new post-----------------------------//
 exports.createNewPost = (req, res, next) => {
-  //req.body.post = JSON.parse(req.body.post);
+
   //todo - this what i mean, cz logged.--//
-  //console.log(req.file);
+
+  
   const url = req.protocol + "://" + req.get("host");
   const post = {
     title: req.body.title,
@@ -18,7 +20,24 @@ exports.createNewPost = (req, res, next) => {
     imageUrl: url + "/images/" + req.file.filename,
     // take from token, here hardcoded
   };
+//* Validation //
+const schema = {
+  title: {type:"string", optional: false, max: "250"},
+    content:{type:"string", optional: false, max: "100"}
+}
 
+const v = new Validator();
+const validationResponce = v.validate(post,schema);
+
+if(validationResponce !==true){
+  return res.status(400).json({
+    message:"Validation Failed",
+    error: validationResponce
+  });
+}
+
+ 
+  
   Post.create(post)
     .then((resulter) => {
       res.status(200).json({
@@ -63,7 +82,7 @@ exports.singlePost = (req, res, next) => {
 exports.updatePost = (req,res,next) => {
   const id = req.params.id;
   const body = req.body;
-  console.log("bosy",body);
+  console.log("body",body);
   const updatePost = {
     title : req.body.title,
     content : req.body.content,
@@ -230,8 +249,8 @@ exports.getAllPosts = async (req, res, next) => {
                 {},
                 {
                   post_id: post.id,
-                  post_creatoe_first_name: user.first_name,
-                  post_creatoe_last_name: user.last_name,
+                  post_creater_first_name: user.first_name,
+                  post_creater_last_name: user.last_name,
                   content: post.content,
                   title: post.title,
                   imageUrl: post.imageUrl,
@@ -242,7 +261,7 @@ exports.getAllPosts = async (req, res, next) => {
                       {},
                       {
                         comment_id: comment.id,
-                        creatoe_first_name: user.first_name,
+                        creater_first_name: user.first_name,
                         post_id: comment.post_id,
                         content: comment.content,
                         posted: comment.updatedAt,

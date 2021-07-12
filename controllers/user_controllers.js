@@ -5,7 +5,7 @@ const db = require("../module/models");
 const User = db.user;
 const Comment = db.comments;
 const PostAll = db.post;
-
+const Validator = require ("fastest-validator");
 
 //! -------------sign up function ------//
 
@@ -13,6 +13,7 @@ exports.signup = async (req, res, next) => {
   const user_password = bcrypt.hashSync(req.body.user_password, 8);
   const { first_name, last_name, user_email, user_hobbies, user_bio } =
     req.body;
+
   const alreadyExistsUser = await User.findOne({ where: { user_email } }).catch(
     (err) => {
       console.log("Error : ", err);
@@ -63,7 +64,9 @@ exports.login = (req, res, next) => {
             "RANDOM_SECREAT_TOKEN",
             {
               expiresIn: "24h",
+          
             }
+         
           );
          
           res.status(200).json({
@@ -87,8 +90,6 @@ exports.login = (req, res, next) => {
 
 exports.delete = async (req, res) => {
   const id = req.params.id;
-  //const userId = req.userdata.userId;
-   //- only cretaer can delete it --/
    //Todo = Destroy User is enoug ?? post comments all removeing
   try{
 const deleteUser = User.destroy({ where: { id: id}})

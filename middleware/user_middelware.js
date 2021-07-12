@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
     if (req.body.userId && res.body.userId !== userId) {
       throw "Invalid userId";
     } else {
-      //todo - need to use this req.userdata to create post,user id.--//
+      // need to use this req.userdata to create post,user id.--//
       req.userdata = decodedToken;
       next();
     }

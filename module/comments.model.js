@@ -11,21 +11,21 @@ module.exports = (sequelize, Sequelize) => {
       required: true,
     },
 
-    UserId: {
+    userId: {
       type: Sequelize.INTEGER,
-      //allowNull: false,
-      // references: {
-      //   model: "user", // 'Movies' would also work
-      //   key: "id",
-      // },
-    },
-    PostId: {
+    //   //allowNull: false,
+    //   // references: {
+    //   //   model: "user", // 'Movies' would also work
+    //   //   key: "id",
+    //   // },
+     },
+    postId: {
       type: Sequelize.INTEGER,
-      allowNull: false,
-      // references: {
-      //   model: "post", // 'Actors' would also work
-      //   key: "id",
-      // },
+      
+      references: {
+        model: "post", // 'Actors' would also work
+        key: "id",
+      },
     },
   });
 
