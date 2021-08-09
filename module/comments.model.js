@@ -21,7 +21,7 @@ module.exports = (sequelize, Sequelize) => {
      },
     postId: {
       type: Sequelize.INTEGER,
-      
+      //allowN  ull: false,
       references: {
         model: "post", // 'Actors' would also work
         key: "id",

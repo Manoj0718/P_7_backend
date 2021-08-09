@@ -11,6 +11,6 @@ router.post("/", authentication, upload, postCtrl.createNewPost);
 //  -- //! put - replace whole object
 //  -- //! patch- only replace changeing object
 router.put("/:id", authentication, postCtrl.updatePost);
-router.delete("/:id/", authentication, postCtrl.deletePost);
+router.delete("/:id", authentication, postCtrl.deletePost);
 
 module.exports = router;

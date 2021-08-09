@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { user } = require("../module/models");
 const db = require("../module/models");
 const User = db.user;
 const Comment = db.comments;
@@ -64,7 +63,6 @@ exports.login = (req, res, next) => {
             "RANDOM_SECREAT_TOKEN",
             {
               expiresIn: "24h",
-          
             }
          
           );
@@ -111,7 +109,6 @@ res.status(200).json({
 //! -------------Get All Users function ------//
 exports.getAllUsers = async (req, res,next) => {
 try{
-
   //* here i return the result updated order.
   //*DESC useing, cause i need to display data order of new
   const allUsers = await User.findAll({order:[['updatedAt','DESC']]});

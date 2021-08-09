@@ -1,4 +1,4 @@
-const db = require("../module/models");
+//const db = require("../module/models");
 //const User = db.user;
 
 //const Post = require("./user.model");
@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
     },
     title: {
-      type: Sequelize.STRING,
+      type: Sequelize.STRING, 
       
     },
     content: {
@@ -23,6 +23,16 @@ module.exports = (sequelize, Sequelize) => {
     imageUrl: {
       type: Sequelize.STRING,
     },
+    //  seen: {
+    //    type: Sequelize.STRING,
+    //  allowNull: false,   
+    //  get(){
+    //   return this.getDataValue('seen').split(';')
+    //  },
+    //  set(value){
+    //   this.setDataValue('seen',value.join(';'));
+    //  }
+    //  },
     // userId: {
     //   type: Sequelize.INTEGER,
     //   references: {

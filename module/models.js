@@ -1,6 +1,5 @@
 const dbConfig = require("../db_config/db.config");
 const Sequelize = require("sequelize");
-//const { Sequelize, DataTypes } = require("sequelize");
 
 const sequalize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -25,48 +24,30 @@ db.sequelize = sequalize;
 //--this take from mysql database --//
 db.user = require("./user.model.js")(sequalize, Sequelize);
 db.post = require("./post.model.js")(sequalize, Sequelize);
+db.status = require("./checking")(sequalize, Sequelize);
 db.comments = require("./comments.model.js")(sequalize, Sequelize);
 
-//reletionship user/post/comments tabels// //
-// db.user.hasMany(db.post, { as: "post" });
-// db.post.belongsTo(db.user, {
-//   foreignKey: "userId",
-//   as: "user",
-// });
-// db.post.hasMany(db.comments);
-// db.comments.belongsTo(db.post);
-
 //*------------------remove 'as'----------------------------------//
-db.comments.belongsTo(db.post);
-db.post.hasMany(db.comments);
+//* CASCADE : Delete or update the row from the parent table and automatically delete or update the matching rows in the child table. ... SET NULL : Delete or update the row from the parent table and set the foreign key column or columns in the child table to NULL .
+db.comments.belongsTo(db.post,{onDelete: 'cascade'});
+db.comments.belongsTo(db.user,{onDelete: 'cascade'});
+
+db.post.hasMany(db.comments,{onDelete: 'cascade'});
+db.post.hasMany(db.status,{onDelete: 'cascade'});
 db.post.belongsTo(db.user);
-db.user.hasMany(db.post);
+
+db.user.hasMany(db.post,{onDelete: 'cascade'});
+db.user.hasMany(db.comments,{onDelete: 'cascade'});
+db.user.hasMany(db.status,{onDelete: 'cascade'});
+
+db.status.belongsTo(db.user,{as:this.user,foreignKey:'userId'});
+db.status.belongsTo(db.post,{as:this.post,foreignKey:'postId'});
+
+
+
+// db.comments.belongsToMany(db.user,{through : db.post});
 //*--------------------------------------//
 
-//TODO - here i tried to use my comments table with 'belongToMany' sequalize syntex, But it will throw a error //
-//!-------- 01 st try like this ----------------//
-//reletionship POST/comments/user table//
-
-//db.user.belongsToMany(db.post, { through: db.comments });
-//db.post.belongsToMany(db.user, { through: db.comments });
-
-///db.post.belongsToMany(db.user, { through: db.comments });
-//db.user.belongsToMany(db.post, { through: db.comments });
-//!--end of 01st try ----------------------------//
-
-//!-------- 02nd  try like this ----------------//
-//reletionship comments table//
-// db.post.belongsToMany(db.user, {
-//   through: db.comments,
-//   model: "user",
-//   forignKey: "userId",
-// });
-// db.user.belongsToMany(db.post, {
-//   through: db.comments,
-//   as: "post",
-//   forignKey: "postId",
-// });
-//!------------end of 02nd try ----------------------------//
 module.exports = db;
 
 //!source - https://lorenstewart.me/2016/09/12/sequelize-table-associations-joins/

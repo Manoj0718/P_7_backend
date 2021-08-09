@@ -9,7 +9,7 @@ exports.create_New_Comments = (req, res, next) => {
  
   const comment = {
     content: req.body.content,
-     userId: req.userdata.userId,
+    userId: req.userdata.userId,
      postId: req.body.postId,
   };
  console.log("req body",req.body);
