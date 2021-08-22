@@ -23,6 +23,10 @@ module.exports = (sequelize, Sequelize) => {
         },
       
       },
+      // is_status : {
+      //   type : Sequelize.BOOLEAN,
+      //    DEFAULT: false,
+      // }
       
     });
   

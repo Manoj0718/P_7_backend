@@ -13,8 +13,8 @@ module.exports = (sequelize, Sequelize) => {
       autoIncrement: true,
     },
     title: {
-      type: Sequelize.STRING, 
-      
+      type: Sequelize.STRING,
+
     },
     content: {
       type: Sequelize.STRING,
