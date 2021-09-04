@@ -16,13 +16,12 @@ exports.create_New_Comments = (req, res, next) => {
   ///-----------------------------//
   //* Validation //
   const schema = {
-
     content: {
       type: "string",
       optional: false,
       max: "500"
     }
-  }
+  };
 
   const v = new Validator();
   const validationResponce = v.validate(comment, schema);

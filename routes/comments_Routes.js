@@ -6,12 +6,12 @@ const auth = require("../middleware/user_middelware");
 
 
 
-router.get("/",auth, comments_Controller.get_All_Comments);
+router.get("/", auth, comments_Controller.get_All_Comments);
 
 router.get("/:id", comments_Controller.get_single_comment);
 
-router.post("/",auth, comments_Controller.create_New_Comments);
+router.post("/", auth, comments_Controller.create_New_Comments);
 
-router.delete("/:id",auth, comments_Controller.delete_comments);
+router.delete("/:id", auth, comments_Controller.delete_comments);
 
 module.exports = router;

@@ -25,10 +25,6 @@ module.exports = (sequelize, Sequelize) => {
     user_bio: {
       type: Sequelize.STRING,
     },
-    // createdAt: {
-    //   type: "TIMESTAMP",
-    //   defaultValue: Sequelize.NOW,
-    // },
   });
   return User;
 };

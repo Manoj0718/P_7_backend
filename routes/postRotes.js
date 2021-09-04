@@ -10,7 +10,7 @@ router.get("/:id", authentication, postCtrl.singlePost);
 router.post("/", authentication, upload, postCtrl.createNewPost);
 //  -- //! put - replace whole object
 //  -- //! patch- only replace changeing object
-router.put("/:id", authentication, postCtrl.updatePost);
+router.put("/:id", authentication, upload, postCtrl.updatePost);
 router.delete("/:id", authentication, postCtrl.deletePost);
 
 module.exports = router;

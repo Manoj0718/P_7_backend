@@ -13,15 +13,10 @@ module.exports = (sequelize, Sequelize) => {
 
     userId: {
       type: Sequelize.INTEGER,
-    //   //allowNull: false,
-    //   // references: {
-    //   //   model: "user", // 'Movies' would also work
-    //   //   key: "id",
-    //   // },
-     },
+    },
+
     postId: {
       type: Sequelize.INTEGER,
-      //allowN  ull: false,
       references: {
         model: "post", // 'Actors' would also work
         key: "id",

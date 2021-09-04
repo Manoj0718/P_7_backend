@@ -11,14 +11,13 @@ router.get("/users", user_Controllers.getAllUsers);
 router.post("/signup", user_Controllers.signup);
 
 /*GET profile */
-router.get("/users/:id",user_Controllers.singleUser);
+router.get("/users/:id", user_Controllers.singleUser);
 
-/*update profile*/ 
-router.patch("/users/:id",user_Controllers.updateSingleUser);
+/*update profile*/
+router.patch("/users/:id", user_Controllers.updateSingleUser);
 
 /*delete profile*/
 router.delete("/users/:id", user_Controllers.delete);
 
 
 module.exports = router;
-

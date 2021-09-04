@@ -29,19 +29,39 @@ db.comments = require("./comments.model.js")(sequalize, Sequelize);
 
 //*------------------remove 'as'----------------------------------//
 //* CASCADE : Delete or update the row from the parent table and automatically delete or update the matching rows in the child table. ... SET NULL : Delete or update the row from the parent table and set the foreign key column or columns in the child table to NULL .
-db.comments.belongsTo(db.post,{onDelete: 'cascade'});
-db.comments.belongsTo(db.user,{onDelete: 'cascade'});
+db.comments.belongsTo(db.post, {
+  onDelete: 'cascade'
+});
+db.comments.belongsTo(db.user, {
+  onDelete: 'cascade'
+});
 
-db.post.hasMany(db.comments,{onDelete: 'cascade'});
-db.post.hasMany(db.status,{onDelete: 'cascade'});
+db.post.hasMany(db.comments, {
+  onDelete: 'cascade'
+});
+db.post.hasMany(db.status, {
+  onDelete: 'cascade'
+});
 db.post.belongsTo(db.user);
 
-db.user.hasMany(db.post,{onDelete: 'cascade'});
-db.user.hasMany(db.comments,{onDelete: 'cascade'});
-db.user.hasMany(db.status,{onDelete: 'cascade'});
+db.user.hasMany(db.post, {
+  onDelete: 'cascade'
+});
+db.user.hasMany(db.comments, {
+  onDelete: 'cascade'
+});
+db.user.hasMany(db.status, {
+  onDelete: 'cascade'
+});
 
-db.status.belongsTo(db.user,{as:this.user,foreignKey:'userId'});
-db.status.belongsTo(db.post,{as:this.post,foreignKey:'postId'});
+db.status.belongsTo(db.user, {
+  as: this.user,
+  foreignKey: 'userId'
+});
+db.status.belongsTo(db.post, {
+  as: this.post,
+  foreignKey: 'postId'
+});
 
 
 

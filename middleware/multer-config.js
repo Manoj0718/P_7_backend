@@ -13,10 +13,16 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, callback) => {
     const extension = MIME_TYPES[file.mimetype];
-    callback(null, Date.now() + "." + extension);
+    let filename = Date.now() + "." + extension;
+    req.body.file = filename;
+    console.log(filename, "multer 17");
+    // callback(null, Date.now() + "." + extension);
+    callback(null, filename);
   }
 });
 
-module.exports = multer({ storage: storage }).single("image");
+module.exports = multer({
+  storage: storage
+}).single("image");
 
 // single("image"); we have to use in postmon and in frontend this name "image"
